@@ -1,0 +1,31 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Transform: 'Aliyun::Serverless-2018-04-03'
+Resources:
+  # 自定义域名
+  # xxx.xxxx.com:
+  #   Type: 'Aliyun::Serverless::CustomDomain'
+  #   Properties:
+  #     Protocol: HTTP
+  #     RouteConfig:
+  #       routes:
+  #         /demoService/demoFun:
+  #           ServiceName: demoService
+  #           FunctionName: demoFun
+  demoService:
+    Type: 'Aliyun::Serverless::Service'
+    demoFun:
+      Type: 'Aliyun::Serverless::Function'
+      Properties:
+        Handler: index.handler
+        Runtime: nodejs8
+        Timeout: 60
+        MemorySize: 512
+        CodeUri: demoService\demoFun\dist
+      Events:
+        httpTrigger:
+          Type: HTTP
+          Properties:
+            AuthType: ANONYMOUS
+            Methods:
+              - GET
+              - POST
